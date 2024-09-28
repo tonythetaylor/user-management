@@ -6,7 +6,7 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
 import FileUploadComponent from "../FileUpload/FileUploadComponent";
-import ReusableTableComponent from ".";
+import ReusableTableComponent from "./ReusableTableComponent";
 // import { UserProps, createBulkUsers } from "../../actions/users";
 const TableComponent = (data: any) => {
   const { data: session } = useSession();
@@ -23,54 +23,6 @@ const TableComponent = (data: any) => {
   const [loading, setLoading] = useState(false);
   const [jsonData, setJsonData] = useState("");
 
-  // json stringified (purpose of previewing)
-  // function previewData() {
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onload = (e) => {
-  //       const data = e.target?.result;
-  //       if (data) {
-  //         const workbook = XLSX.read(data, { type: "binary" });
-  //         // SheetName
-  //         const sheetName = workbook.SheetNames[0];
-  //         // Worksheet
-  //         const workSheet = workbook.Sheets[sheetName];
-  //         // Json
-  //         const json = XLSX.utils.sheet_to_json(workSheet);
-  //         setJsonData(JSON.stringify(json, null, 2));
-  //       }
-  //     };
-  //     reader.readAsBinaryString(file);
-  //   }
-  // }
-
-  // function saveData() {
-  //   if (file) {
-  //     setLoading(true);
-  //     const reader = new FileReader();
-  //     reader.onload = async (e) => {
-  //       const data = e.target?.result;
-  //       if (data) {
-  //         const workbook = XLSX.read(data, { type: "binary" });
-  //         // SheetName
-  //         const sheetName = workbook.SheetNames[0];
-  //         // Worksheet
-  //         const workSheet = workbook.Sheets[sheetName];
-  //         // Json
-  //         const json: UserProps[] = XLSX.utils.sheet_to_json(workSheet);
-  //         //Save to the DB
-  //         try {
-  //           // console.log(json);
-  //           await createBulkUsers(json);
-  //           setLoading(false);
-  //         } catch (error) {
-  //           console.log(error);
-  //         }
-  //       }
-  //     };
-  //     reader.readAsBinaryString(file);
-  //   }
-  // }
   const headers = Object.keys(data?.data?.data[0]);
   // console.log('headers', headers)
   const rows = data?.data?.data.map((item: string) => Object.values(item));
@@ -114,35 +66,11 @@ const TableComponent = (data: any) => {
             <h3 className="text-lg font-semibold text-slate-800">{token?.fullname}</h3>
           </div>
         </div>
-        <ReusableTableComponent 
-        headers={headers}
-        rows={rows}
-        loading={loading}
+        <ReusableTableComponent
+          headers={headers}
+          rows={rows}
+          loading={loading}
         />
-        {/* <div className="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
-          {loading ? (
-            <p>Saving Data please wait...</p>
-          ) : (
-            <table className="w-full text-left table-auto min-w-max">
-              <thead>
-                <tr>
-                  {headers.map(header => <th key={header} className='p-4 border-b border-slate-500 bg-slate-300'>
-                    <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                      {header.toUpperCase()}
-                    </p>
-                  </th>)}
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((row, index) => (
-                  <tr key={index} className='hover:bg-blue-50'>
-                    {row.map((cell: string, index: number) => <td key={index} className='p-4 border-b border-blue-gray-50 py-5'>{cell}</td>)}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div> */}
       </div>
     </>
   );
