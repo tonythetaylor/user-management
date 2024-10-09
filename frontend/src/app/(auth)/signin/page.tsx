@@ -26,7 +26,6 @@ export default async function SignInPage({ searchParams }: Props) {
   if (session) {
     redirect("/dashboard")
   }
-  console.log('Session: ',session)
 
   return (
     <>

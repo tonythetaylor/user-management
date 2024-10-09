@@ -20,10 +20,8 @@ export default function UseSorter<T>(
   const [key, setKey] = useState<keyof T>();
 
   useEffect(() => {
-    console.log("Key: ", key);
-    console.log("Dir: ", dir);
     if (key !== undefined && dir !== undefined) {
-      const result = data.sort((a: T, b: T) => {
+      const result = [...data].sort((a: T, b: T) => {
         if (key && dir?.valueOf() === SortDirection.Ascending.valueOf()) {
           console.log("Ascending");
           return a[key] < b[key] ? -1 : 1;

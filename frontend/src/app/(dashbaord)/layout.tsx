@@ -10,8 +10,8 @@ import { redirect } from "next/navigation";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "LocalStock",
-  description: "Personal item invetory",
+  title: "Terability",
+  description: "Parse, structure and output documents.",
 };
 
 export default async function DashboardLayout({
@@ -20,7 +20,7 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }>) {
  const session = await auth()
-  console.log(!session?.expires)
+  // console.log(!session?.expires)
   if (!session?.expires) {
     redirect('/login');
   } else {

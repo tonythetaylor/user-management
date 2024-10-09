@@ -1,31 +1,59 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
 
-import { User } from "@prisma/client";
+import { User, Author } from "@prisma/client";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
 import FileUploadComponent from "../FileUpload/FileUploadComponent";
 import ReusableTableComponent from "./ReusableTableComponent";
 // import { UserProps, createBulkUsers } from "../../actions/users";
+
+interface Column {
+  name: string;
+  key: keyof Author;
+}
+
+const columns: Column[] = [
+  {
+    name: "ID",
+    key: "id",
+  },
+  {
+    name: "FIRSTNAME",
+    key: "firstName",
+  },
+  {
+    name: "LASTNAME",
+    key: "lastName",
+  },
+  {
+    name: "CREATEDAT",
+    key: "createdAt",
+  },
+  {
+    name: "UPDATEDAT",
+    key: "updatedAt",
+  },
+];
+
 const TableComponent = (data: any) => {
   const { data: session } = useSession();
 
+  if (!data) return []
   if (!session) {
     redirect('/signin')
   }
   const { token } = session?.user as any
 
-
-  console.log(session)
   // file
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [jsonData, setJsonData] = useState("");
 
-  const headers = Object.keys(data?.data?.data[0]);
-  // console.log('headers', headers)
-  const rows = data?.data?.data.map((item: string) => Object.values(item));
+  const headers = Object.keys(data?.data?.data[0]) || [];
+  // const rows = data?.data?.data.map((item: string) => Object.values(item));
+  const rows = data?.data?.data;
 
   return (
     <>
@@ -67,6 +95,7 @@ const TableComponent = (data: any) => {
           </div>
         </div>
         <ReusableTableComponent
+          columns={columns}
           headers={headers}
           rows={rows}
           loading={loading}

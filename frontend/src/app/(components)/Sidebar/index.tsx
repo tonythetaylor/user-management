@@ -57,7 +57,7 @@ const Sidebar = () => {
             {/* TOP LOGO */}
             <div className={`flex gap-3 justify-between md:justify-normal items-center pt-8 ${isSidebarCollapsed ? "px-5" : "px-8"}`} >
                 <Image src={`/logo/logo.png`} alt='logo' width="24" height="24" />
-                <h1 className={`${isSidebarCollapsed ? "hidden" : "block  "} font-extrabold text-2l`}>LOCALSTOCK </h1>
+                <h1 className={`${isSidebarCollapsed ? "hidden" : "block  "} font-extrabold text-2l`}>Terability </h1>
 
                 <button className="md:hidden px-3 py-3 bg-gray-100 rounded-full hover:bg-blue-100" onClick={toggleSidebar}>
                     <Menu className="w-4 h-4" />

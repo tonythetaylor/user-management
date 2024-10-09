@@ -4,6 +4,16 @@ import { db } from '../src/utils/db.server';
 // import bcrypt from 'bcryptjs';
 // import { v4 as uuidv4 } from 'uuid';
 
+const toTitleCase = (str: any) => {
+  if (!str) {
+    return '';
+  }
+  const strArr = str.split(' ').map((word: any) => {
+    return word[0].toUpperCase() + word.substring(1).toLowerCase();
+  });
+  return strArr.join(' ');
+}
+
 async function getUser(): Promise<TUserRegisterWrite> {
   const password = 'admin';
   const hashedPassword = await hashPassword(password);
@@ -58,8 +68,8 @@ async function seed() {
       console.log(`[*] Seeding Author : ${JSON.stringify(author)}`);
       return db.author.create({
         data: {
-          firstName: author.firstName,
-          lastName: author.lastName,
+          firstName: toTitleCase(author.firstName),
+          lastName: toTitleCase(author.lastName),
         },
       });
     })
